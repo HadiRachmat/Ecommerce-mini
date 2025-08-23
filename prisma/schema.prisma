@@ -1,0 +1,193 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  email     String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(100)
+  name      String   @db.VarChar(100)
+  role      Int      @default(1) @db.SmallInt // 1: admin, 2: staff 3: customer
+  status    Int      @default(1) @db.SmallInt // 1: active, 0: inactive
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  usersAdmin   UserAdmin?
+  userStaff    UsersStaff?
+  userCustomer UserCustomer?
+  Carts        Carts[]
+  Orders       Orders[]
+
+  @@map("users")
+}
+
+model UserAdmin {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  userId    Int      @unique @db.Integer
+  fullname  String   @db.VarChar(100)
+  phone     String   @db.VarChar(15)
+  address   String   @db.VarChar(255)
+  position  Int      @default(1) @db.SmallInt // 1: superadmin, 2: customer service, 3: warehouse 4: finance 5: marketing
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("users_admin")
+}
+
+model UsersStaff {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  userId    Int      @unique @db.Integer
+  fullname  String   @db.VarChar(100)
+  phone     String   @db.VarChar(15)
+  address   String   @db.VarChar(255)
+  position  Int      @default(1) @db.SmallInt // 1: superadmin, 2: customer service, 3: warehouse 4: finance 5: marketing
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("users_staff")
+}
+
+model UserCustomer {
+  id           Int      @id @default(autoincrement()) @db.Integer
+  userId       Int      @unique @db.Integer
+  fullname     String   @db.VarChar(100)
+  address      String   @db.VarChar(255)
+  placeOfBirth String   @db.VarChar(100)
+  dateOfBirth  DateTime @db.Date
+  gender       Int      @default(1) @db.SmallInt //1: female, 2: Male
+  phone        String   @db.VarChar(15)
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @updatedAt @db.Timestamp(6)
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("users_customer")
+}
+
+model Categories {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  name        String   @unique @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  products Products[]
+
+  @@map("categories")
+}
+
+model Products {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  categoryId  Int      @db.Integer
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  price       Float    @db.DoublePrecision
+  stock       Int      @db.Integer
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  category     Categories   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderDetails OrderItems[]
+  cartItems    CartsItems[]
+
+  @@map("products")
+}
+
+model Carts {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  userId    Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  user       Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartsItems CartsItems[]
+}
+
+model CartsItems {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  cartId    Int      @db.Integer
+  productId Int      @db.Integer
+  quantity  Int      @db.Integer
+  price     Float    @db.DoublePrecision
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  cart    Carts    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Orders {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  userId      Int      @db.Integer
+  description String?  @db.VarChar(255)
+  status      Int      @default(1) @db.SmallInt // 1: pending, 2: paid, 3: shipped, 4: delivered, 5: cancelled
+  totalAmount Float    @db.DoublePrecision
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  user          Users        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Order_Details OrderItems[]
+  payment       Payments?
+}
+
+model OrderItems {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  orderId   Int      @db.Integer
+  productId Int      @db.Integer
+  quantity  Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  order   Orders   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("order_details")
+}
+
+model Payments {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  orderId   Int      @unique @db.Integer
+  amount    Float    @db.DoublePrecision
+  code      String   @unique @db.VarChar(100)
+  method    Int      @db.SmallInt // 1: credit card, 2: bank transfer, 3: e-wallet
+  status    Int      @default(1) @db.SmallInt // 1: pending, 2: completed, 3: failed
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  order               Orders                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  paymentConfirmation PaymentConfirmations?
+
+  @@map("payments")
+}
+
+model PaymentConfirmations {
+  id                Int      @id @default(autoincrement()) @db.Integer
+  paymentId         Int      @unique @db.Integer
+  description       String?  @db.VarChar(255)
+  bankAccountName   String   @db.VarChar(100)
+  bankAccountNumber String   @db.VarChar(50)
+  bankName          String   @db.VarChar(100)
+  code              String   @unique @db.VarChar(100)
+  note              String?  @db.VarChar(255)
+  status            Int      @default(1) @db.SmallInt // 1: pending, 2: confirmed, 3: rejected
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime @updatedAt @db.Timestamp(6)
+
+  payment Payments @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+}

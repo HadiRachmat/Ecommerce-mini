@@ -1,0 +1,31 @@
+{
+  "name": "app-ecommerce-mini-backend",
+  "version": "1.0.0",
+  "description": "E-commerce mini ",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/main.js"
+  },
+  "author": "Hadi Rachmat Supindar",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.3",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^9.34.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.14.0"
+  }
+}
