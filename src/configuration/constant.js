@@ -1,0 +1,25 @@
+export const BASE_ROLE_ADMIN = 1;
+export const BASE_ROLE_STAFF = 2;
+export const BASE_ROLE_CUSTOMER = 3;
+
+export const BASE_STATUS_ACTIVE = 1;
+export const BASE_STATUS_INACTIVE = 0;
+
+export const BASE_GENDER_FEMALE = 1;
+export const BASE_GENDER_MALE = 2;
+
+export const BASE_STATUS_ORDER_PENDING = 1;
+export const BASE_STATUS_ORDER_PAID = 2;
+export const BASE_STATUS_ORDER_SHIPPING = 3;
+export const BASE_STATUS_ORDER_DELIVERED = 4;
+export const BASE_STATUS_ORDER_CANCELLED = 5;
+
+export const BASE_METHOD_PAYMENT_CREDIT_CARD = 1;
+export const BASE_METHOD_PAYMENT_BANK_TRANSFER = 2;
+export const BASE_METHOD_PAYMENT_E_WALLET = 3;
+
+export const BASE_PAYMENT_STATUS_PENDING = 1;
+export const BASE_PAYMENT_STATUS_SUCCESS = 2;
+export const BASE_PAYMENT_STATUS_FAILED = 3;
+export const BASE_PAYMENT_STATUS_REJECTED = 4;
+
