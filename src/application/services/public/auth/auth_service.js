@@ -3,6 +3,7 @@ import AuthFactory from '../../../../domain/factory/public/auth/AuthFactory.js';
 import { ResponseError } from '../../../../error/ResponseError.js';
 // import UserDTO from '../../../../infrastructure/DTO/userDTO.js';
 import userMapper from '../../../../infrastructure/mappers/userMapper.js';
+import { generateAccessToken, generateRefreshToken } from '../../../../helpers/jwt_token_helper.js';
 
 const registerServices = async (requestData) => {
   const { confirmPassword, ...requestDTO } = requestData;
@@ -25,18 +26,41 @@ const registerServices = async (requestData) => {
 };
 
 const loginServices = async (requestData) => {
-  const requestLoginFactory = await AuthFactory.loginUser(requestData);
+  const { email, password } = requestData;
+  if (!email || !password) {
+    throw new ResponseError(400, 'Email and password are required');
+  }
+
+  const user = await AuthRepository.findByEmail(email);
+  if (!user) {
+    throw new ResponseError(400, 'Invalid email or password');
+  }
+  const requestLoginFactory = await AuthFactory.loginUser({
+    email,
+    password,
+    hashPassword: user.getPassword(),
+  });
+  
   if (!requestLoginFactory) {
-    throw new ResponseError(400, 'Invalid email or password');
+    throw new ResponseError(400, 'Invalid password');
   }
-  const loginUser = await AuthRepository.findByEmail(requestData.email);
-  if (!loginUser) {
-    throw new ResponseError(400, 'Invalid email or password');
-  }
+
+  // Generate JWT tokens
+  const payload = {
+    id: user.id,
+    email: user.getEmail(),
+    role: user.getRole(),
+  };
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
 
   const finalData = {
     message: 'User logged in successfully',
-    user: userMapper.toDTO(loginUser),
+    user: userMapper.toDTO(user),
+    token: {
+      accessToken,
+      refreshToken,
+    },
   };
 
   return finalData;

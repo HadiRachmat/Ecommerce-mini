@@ -1,4 +1,4 @@
-import { ResponseError } from "../../../../../error/ResponseError.js";
+import { ResponseError } from '../../../../../error/ResponseError.js';
 
 export default class Email {
   constructor(email) {

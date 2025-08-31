@@ -24,7 +24,7 @@ model Users {
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  usersAdmin   UserAdmin?
+  userAdmin   UserAdmin?
   userStaff    UsersStaff?
   userCustomer UserCustomer?
   Carts        Carts[]

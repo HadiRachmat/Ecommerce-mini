@@ -5,10 +5,11 @@ import Status from '../../../valueObject/public/auth/registerVO/status.js';
 import Auth from '../../../entities/public/auth/Auth.js';
 import Username from '../../../valueObject/public/auth/registerVO/username.js';
 import AuthDomainService from '../../../services/public/AuthDomainService.js';
+import { ResponseError } from '../../../../error/ResponseError.js';
 
 export default class AuthFactory {
   static async registerUser({ email, username, password, role, status }) {
-    const emailVo = new Email(email);
+    const emailVo = new Email(email.trim().toLowerCase());
     const usernameVo = new Username(username);
     const passwordVo = new Password(password);
     const roleVo = new Role(role);
@@ -27,18 +28,18 @@ export default class AuthFactory {
     return register;
   }
 
-  static async loginUser({ email, password }) {
+  static async loginUser({ email, password, hashPassword}) {
     const emailVo = new Email(email);
     const passwordVo = new Password(password);
 
-    const isMatch = await AuthDomainService.comparePassword(emailVo.email, passwordVo.password);
+    const isMatch = await AuthDomainService.comparePassword(passwordVo.password, hashPassword);
     if (!isMatch) {
-      throw new Error(400, 'Invalid email or password');
+      throw new ResponseError(400, 'Invalid email or password');
     }
     
     const login = new Auth({
       email: emailVo.email,
-      password: passwordVo.password,
+      password: hashPassword,
     });
 
     return login;

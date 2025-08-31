@@ -33,11 +33,15 @@ export default class AuthRepository {
         email: true,
         username: true,
         password: true,
+        userAdmin: { select: { id: true } },
+        userStaff: { select: { id: true } },
+        userCustomer: { select: { id: true } },
         role: true,
         status: true,
       },
     });
     if (!user) {
+      user.passwordHash = user.password;
       return null;
     }
     

@@ -1,11 +1,14 @@
 export default class Auth {
-  constructor({ id, email, username, password, role, status }) {
+  constructor({ id, email, username, password, role, status, userAdmin, userStaff, userCustomer }) {
     this.id = id;
     this.email = email;
     this.username = username;
     this.password = password;
     this.role = role;
     this.status = status;
+    this.userAdmin = userAdmin;
+    this.userStaff = userStaff;
+    this.userCustomer = userCustomer;
   }
 
   getId() {
@@ -30,5 +33,16 @@ export default class Auth {
 
   getStatus() {
     return this.status;
+  }
+  getUserAdmin() {
+    return this.userAdmin;
+  }
+
+  getUserStaff() {
+    return this.userStaff;
+  }
+
+  getUserCustomer() {
+    return this.userCustomer;
   }
 }

@@ -1,6 +1,6 @@
 import AuthService from '../../../application/services/public/auth/auth_service.js';
 import { validate } from '../../../validation/validation.js';
-import { register } from '../../../validation/public/auth_validation.js';
+import { register , login } from '../../../validation/public/auth_validation.js';
 
 const registerUser = async (req, res, next) => {
   const request = req.body;
@@ -18,8 +18,15 @@ const registerUser = async (req, res, next) => {
 };
 const loginUser = async (req, res, next) => {
   const request = req.body;
+  const validated = validate(login, request);
   try {
-    const result = await AuthService.loginServices(request);
+    const result = await AuthService.loginServices(validated);
+    res.cookie('refreshToken', result.token.refreshToken, {
+      httpOnly: true,
+      secure: false, // Set to true in production
+      sameSite: 'Strict', // Adjust based on your requirements
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
     res.status(200).json({
       status: 'success login user',
       data: result,
