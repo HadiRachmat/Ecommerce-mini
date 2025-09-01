@@ -32,6 +32,7 @@ const loginServices = async (requestData) => {
   }
 
   const user = await AuthRepository.findByEmail(email);
+  console.log('DEBUG user role from DB:', user.getRole());
   if (!user) {
     throw new ResponseError(400, 'Invalid email or password');
   }
@@ -40,7 +41,7 @@ const loginServices = async (requestData) => {
     password,
     hashPassword: user.getPassword(),
   });
-  
+
   if (!requestLoginFactory) {
     throw new ResponseError(400, 'Invalid password');
   }
@@ -49,7 +50,10 @@ const loginServices = async (requestData) => {
   const payload = {
     id: user.id,
     email: user.getEmail(),
-    role: user.getRole(),
+    role: Number(user.getRole()),
+    // userAdmin: user.getUserAdmin(),
+    // userStaff: user.getUserStaff(),
+    // userCustomer: user.getUserCustomer(),
   };
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);

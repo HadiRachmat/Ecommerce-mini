@@ -40,17 +40,20 @@ export default class AuthRepository {
         status: true,
       },
     });
-    if (!user) {
-      user.passwordHash = user.password;
-      return null;
-    }
-    
+
     return new Auth(user);
   }
 
   static async findById(id) {
     const user = await Prisma.users.findUnique({
       where: { id },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        role: true,
+        status: true,
+      },
     });
 
     return new Auth(user);

@@ -1,3 +1,4 @@
+import * as CONSTANT from '../../../../configuration/constant.js';
 export default class Auth {
   constructor({ id, email, username, password, role, status, userAdmin, userStaff, userCustomer }) {
     this.id = id;
@@ -25,6 +26,18 @@ export default class Auth {
 
   getPassword() {
     return this.password;
+  }
+
+  getRoleAdmin() {
+    return this.role === CONSTANT.BASE_ROLE_ADMIN;
+  }
+
+  getRoleStaff() {
+    return this.role === CONSTANT.BASE_ROLE_STAFF;
+  }
+
+  getRoleCustomer() {
+    return this.role === CONSTANT.BASE_ROLE_CUSTOMER;
   }
 
   getRole() {

@@ -3,7 +3,7 @@ export default class UserDTO {
     id,
     email,
     username,
-    password,
+    // password,
     role,
     status,
     userAdmin,
@@ -13,7 +13,7 @@ export default class UserDTO {
     this.id = id;
     this.email = email;
     this.username = username;
-    this.password = password;
+    // this.password = password;
     this.role = role ? Number(role) : null; // pastikan angka
     this.status = status ? Number(status) : null;
     this.userAdmin = userAdmin;
