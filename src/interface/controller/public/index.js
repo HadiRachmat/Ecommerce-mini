@@ -36,7 +36,27 @@ const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
+const refreshToken = async (req, res, next) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Refresh token not provided' });
+    }
+      
+    try {
+      const payload = await AuthService.refreshToken(refreshToken);
+      res.status(200).json({
+        status: 'success',
+        data: payload,
+      });
+    } catch (error) {
+      console.error('Refresh token error:', error.message);
+      next(error);
+    }
+}
+
 export default {
   registerUser,
   loginUser,
+  refreshToken
 };

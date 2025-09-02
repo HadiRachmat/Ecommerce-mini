@@ -5,7 +5,7 @@ dotenv.config();
 
 const JWT_ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET;
 const JWT_REFRESH_TOKEN = process.env.REFRESH_TOKEN_SECRET;
-const JWT_ACCESS_EXPIRATION = '5m';
+const JWT_ACCESS_EXPIRATION = '15m';
 const JWT_REFRESH_EXPIRATION = '7d';
 
 if (!JWT_ACCESS_TOKEN || !JWT_REFRESH_TOKEN) {
