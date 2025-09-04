@@ -24,7 +24,7 @@ model Users {
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  userAdmin   UserAdmin?
+  userAdmin    UserAdmin?
   userStaff    UsersStaff?
   userCustomer UserCustomer?
   Carts        Carts[]
@@ -190,4 +190,17 @@ model PaymentConfirmations {
   updatedAt         DateTime @updatedAt @db.Timestamp(6)
 
   payment Payments @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+}
+
+model attachment {
+  id                 Int      @id @default(autoincrement()) @db.Integer
+  filename           String   @db.VarChar(100)
+  filePath           String   @db.VarChar(255)
+  filetype           String   @db.VarChar(50)
+  attachmentableId   Int      @db.Integer
+  attachmentableType String   @db.VarChar(50)
+  createdAt          DateTime @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime @updatedAt @db.Timestamp(6)
+
+  @@map("attachment")
 }

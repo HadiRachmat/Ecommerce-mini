@@ -1,18 +1,22 @@
 import express from 'express';
 import { AuthMiddleware, AuthorizeRole } from '../../../middleware/AuthMiddleware.js';
+
+import AdminUserController from '../../controller/admin/user/UserController.js';
+
 import * as CONSTANT from '../../../configuration/constant.js';
 
 const AdminRoute = express.Router();
 
-/* ===================== {USER ROUTE} ===================== */
+/*
+  |====================================================================|
+  ===================== {USER ROUTE} =====================
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/user/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create User route is under construction' });
-    next();
-  }
+  AdminUserController.create
 );
 AdminRoute.get(
   '/api/admin/user',
@@ -51,7 +55,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN USER ADMIN ROUTE} ===================== */
+/*
+  |====================================================================|
+  ===================== {ADMIN USER ADMIN ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/user-admin/create',
   AuthMiddleware,
@@ -98,7 +106,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN USER STAFF ROUTE} ===================== */
+/*
+  |====================================================================|
+  ===================== {ADMIN USER STAFF ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/user-staff/create',
   AuthMiddleware,
@@ -145,7 +157,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN USER CUSTOMER ROUTE} ===================== */
+/*
+  |====================================================================|
+  ===================== {ADMIN USER CUSTOMER ROUTE} ====================
+  |====================================================================| 
+*/
 AdminRoute.post(
   '/api/admin/user-customer/create',
   AuthMiddleware,
@@ -192,7 +208,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN CATEOGRIES ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN CATEOGRIES ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/categories/create',
   AuthMiddleware,
@@ -239,7 +259,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN PRODUCTS ROUTE} ===================== */
+/*
+  |====================================================================|
+  ===================== {ADMIN PRODUCTS ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/products/create',
   AuthMiddleware,
@@ -286,7 +310,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN CARTS ROUTE} ===================== */
+/*
+  |====================================================================| 
+  ===================== {ADMIN CARTS ROUTE} =========================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/carts/create',
   AuthMiddleware,
@@ -333,7 +361,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN CARTS ITEMS ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN CARTS ITEMS ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/carts-items/create',
   AuthMiddleware,
@@ -380,7 +412,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN ORDERS ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN ORDERS ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/orders/create',
   AuthMiddleware,
@@ -427,7 +463,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN ORDERS ITEM ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN ORDERS ITEM ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/orders-items/create',
   AuthMiddleware,
@@ -474,7 +514,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN PAYMENTS ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN PAYMENTS ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/payments/create',
   AuthMiddleware,
@@ -521,7 +565,11 @@ AdminRoute.delete(
   }
 );
 
-/* ===================== {ADMIN PAYMENTS CONFIRMATION ROUTE} ===================== */
+/* 
+  |====================================================================|
+  ===================== {ADMIN PAYMENTS CONFIRMATION ROUTE} ===================== 
+  |====================================================================|
+*/
 AdminRoute.post(
   '/api/admin/payments-confirmation/create',
   AuthMiddleware,

@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import PasswordHash from '../../../infrastructure/security/passwordHash.js';
 import { ResponseError } from '../../../error/ResponseError.js';
 
