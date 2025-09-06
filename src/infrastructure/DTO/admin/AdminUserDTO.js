@@ -14,8 +14,8 @@ export default class AdminUserDTO {
     this.email = email;
     this.username = username;
     // this.password = password;
-    this.role = role ? Number(role) : null; // pastikan angka
-    this.status = status ? Number(status) : null;
+    this.role = role !== undefined && role !== null ? Number(role) : null;
+    this.status = status !== undefined && status !== null ? Number(status) : null;
     this.userAdmin = userAdmin;
     this.userStaff = userStaff;
     this.userCustomer = userCustomer;
@@ -31,6 +31,6 @@ export default class AdminUserDTO {
       userAdmin: user.getUserAdmin(),
       userStaff: user.getUserStaff(),
       userCustomer: user.getUserCustomer(),
-    })
+    });
   }
 }

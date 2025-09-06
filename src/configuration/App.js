@@ -9,8 +9,6 @@ App.use(express.json());
 App.use(express.urlencoded({ extended: true }));
 App.use(cookieParser());
 
-// Public Routes
-
 App.use(PublicRoutes);
 
 // Admin Routes

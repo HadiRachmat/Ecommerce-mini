@@ -7,6 +7,12 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  format   = "json"
+}
+
+generator opeApi {
+  provider = "prisma-openapi"
+  output   = "../generated/openapi"
 }
 
 datasource db {

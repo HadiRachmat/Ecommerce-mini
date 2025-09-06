@@ -22,28 +22,25 @@ AdminRoute.get(
   '/api/admin/user',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get User route is under construction' });
-    next();
-  }
+  AdminUserController.findAllUsers
 );
 AdminRoute.get(
   '/api/admin/user/:id',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get By Id User route is under construction' });
-    next();
-  }
+  AdminUserController.findUserById
 );
 AdminRoute.put(
   '/api/admin/user/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Updated User route is under construction' });
-    next();
-  }
+  AdminUserController.updateUser
+);
+AdminRoute.put(
+  '/api/admin/user/:id/change-password',
+  AuthMiddleware,
+  AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
+  AdminUserController.changeUserPassword
 );
 AdminRoute.delete(
   '/api/admin/user/:id/delete',

@@ -15,4 +15,11 @@ const adminCreateUserValidation = Joi.object({
   status: Joi.number().valid(CONSTANT.BASE_STATUS_ACTIVE, CONSTANT.BASE_STATUS_ACTIVE).required(), // Example status: 0-Inactive, 1-Active
 });
 
-export { adminCreateUserValidation };
+const changeUserPasswordValidation = Joi.object({
+  oldPassword: Joi.string().min(6).required(),
+  newPassword: Joi.string().min(6).required(),
+  confirmNewPassword: Joi.string().valid(Joi.ref('newPassword')).required().messages({
+    'any.only': 'Confirm new password does not match new password',
+  }),
+})
+export { adminCreateUserValidation, changeUserPasswordValidation };

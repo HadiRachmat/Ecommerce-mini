@@ -34,7 +34,7 @@ export default class AuthFactory {
 
     const isMatch = await AuthDomainService.comparePassword(passwordVo.password, hashPassword);
     if (!isMatch) {
-      throw new ResponseError(400, 'Invalid email or password');
+      throw new ResponseError(400, 'Invalid password request');
     }
     
     const login = new Auth({

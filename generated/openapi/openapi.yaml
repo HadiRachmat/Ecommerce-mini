@@ -1,0 +1,509 @@
+openapi: 3.1.0
+info:
+  title: Prisma API
+  description: ""
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        email:
+          type: string
+        password:
+          type: string
+        username:
+          type: string
+        role:
+          type: integer
+          format: int32
+        status:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userAdmin:
+          $ref: "#/components/schemas/UserAdmin"
+        userStaff:
+          $ref: "#/components/schemas/UsersStaff"
+        userCustomer:
+          $ref: "#/components/schemas/UserCustomer"
+        Carts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Carts"
+        Orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/Orders"
+      required:
+        - id
+        - email
+        - password
+        - username
+        - role
+        - status
+        - createdAt
+        - updatedAt
+        - Carts
+        - Orders
+    UserAdmin:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        fullname:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        position:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/Users"
+      required:
+        - id
+        - userId
+        - fullname
+        - phone
+        - address
+        - position
+        - createdAt
+        - updatedAt
+        - user
+    UsersStaff:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        fullname:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        position:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/Users"
+      required:
+        - id
+        - userId
+        - fullname
+        - phone
+        - address
+        - position
+        - createdAt
+        - updatedAt
+        - user
+    UserCustomer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        fullname:
+          type: string
+        address:
+          type: string
+        placeOfBirth:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        gender:
+          type: integer
+          format: int32
+        phone:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/Users"
+      required:
+        - id
+        - userId
+        - fullname
+        - address
+        - placeOfBirth
+        - dateOfBirth
+        - gender
+        - phone
+        - createdAt
+        - updatedAt
+        - user
+    Categories:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Products"
+      required:
+        - id
+        - name
+        - createdAt
+        - updatedAt
+        - products
+    Products:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        categoryId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        stock:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        category:
+          $ref: "#/components/schemas/Categories"
+        orderDetails:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItems"
+        cartItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartsItems"
+      required:
+        - id
+        - categoryId
+        - name
+        - price
+        - stock
+        - createdAt
+        - updatedAt
+        - category
+        - orderDetails
+        - cartItems
+    Carts:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/Users"
+        cartsItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartsItems"
+      required:
+        - id
+        - userId
+        - createdAt
+        - updatedAt
+        - user
+        - cartsItems
+    CartsItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        cartId:
+          type: integer
+          format: int32
+        productId:
+          type: integer
+          format: int32
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        cart:
+          $ref: "#/components/schemas/Carts"
+        product:
+          $ref: "#/components/schemas/Products"
+      required:
+        - id
+        - cartId
+        - productId
+        - quantity
+        - price
+        - createdAt
+        - updatedAt
+        - cart
+        - product
+    Orders:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        description:
+          type: string
+        status:
+          type: integer
+          format: int32
+        totalAmount:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/Users"
+        Order_Details:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItems"
+        payment:
+          $ref: "#/components/schemas/Payments"
+      required:
+        - id
+        - userId
+        - status
+        - totalAmount
+        - createdAt
+        - updatedAt
+        - user
+        - Order_Details
+    OrderItems:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        orderId:
+          type: integer
+          format: int32
+        productId:
+          type: integer
+          format: int32
+        quantity:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        order:
+          $ref: "#/components/schemas/Orders"
+        product:
+          $ref: "#/components/schemas/Products"
+      required:
+        - id
+        - orderId
+        - productId
+        - quantity
+        - createdAt
+        - updatedAt
+        - order
+        - product
+    Payments:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        orderId:
+          type: integer
+          format: int32
+        amount:
+          type: number
+          format: double
+        code:
+          type: string
+        method:
+          type: integer
+          format: int32
+        status:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        order:
+          $ref: "#/components/schemas/Orders"
+        paymentConfirmation:
+          $ref: "#/components/schemas/PaymentConfirmations"
+      required:
+        - id
+        - orderId
+        - amount
+        - code
+        - method
+        - status
+        - createdAt
+        - updatedAt
+        - order
+    PaymentConfirmations:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        paymentId:
+          type: integer
+          format: int32
+        description:
+          type: string
+        bankAccountName:
+          type: string
+        bankAccountNumber:
+          type: string
+        bankName:
+          type: string
+        code:
+          type: string
+        note:
+          type: string
+        status:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        payment:
+          $ref: "#/components/schemas/Payments"
+      required:
+        - id
+        - paymentId
+        - bankAccountName
+        - bankAccountNumber
+        - bankName
+        - code
+        - status
+        - createdAt
+        - updatedAt
+        - payment
+    attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        filename:
+          type: string
+        filePath:
+          type: string
+        filetype:
+          type: string
+        attachmentableId:
+          type: integer
+          format: int32
+        attachmentableType:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - filename
+        - filePath
+        - filetype
+        - attachmentableId
+        - attachmentableType
+        - createdAt
+        - updatedAt
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes: {}
+  links: {}
+  callbacks: {}
+tags: []
+servers: []

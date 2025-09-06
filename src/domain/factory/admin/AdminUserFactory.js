@@ -9,7 +9,12 @@ import HashPassword from '../../services/admin/user/HashPassword.js';
 import { ResponseError } from '../../../error/ResponseError.js';
 
 export default class AdminUserFactory {
-  static async createUser ({ email, username, password, role, status }) {
+  /**
+   * ADMIN CREATE USER ( WITH PASSWORD )
+   * @param {*} param0 
+   * @returns 
+   */
+  static async createUser({ email, username, password, role, status }) {
     const emailVo = new Email(email.trim().toLowerCase());
     const usernameVo = new Username(username);
     const passwordVo = new Password(password);
@@ -27,8 +32,52 @@ export default class AdminUserFactory {
       password: hashPassword,
       role: roleVo.role,
       status: statusVo.status,
-    })
+    });
 
     return user;
+  }
+
+  /**
+   * UPDATE PASSWORD ONLY ( CHANGE PASSWORD )
+   * @param {*} param0 
+   * @returns 
+   */
+  static async updatePassword({ user, oldPassword, newPassword }) {
+    const oldPasswordVo = new Password(oldPassword);
+    const newPasswordVo = new Password(newPassword);
+
+    const isMatch = await HashPassword.comparePassword(oldPasswordVo.password, user.password);
+    if (!isMatch) {
+      throw new ResponseError(400, 'Old password is incorrect');
+    }
+
+    const hashNewPassword = await HashPassword.hash(newPasswordVo.password);
+    if (!hashNewPassword) {
+      throw new ResponseError(500, 'Failed to hash new password');
+    }
+
+    const password = hashNewPassword;
+    return password;
+  }
+
+  /**
+   * UPDATE USER ( WITHOUT PASSWORD )
+   * @param {*} param0 
+   * @returns 
+   */
+  static async updateUser({ email, username, role, status }) {
+    const emailVo = new Email(email.trim().toLowerCase());
+    const usernameVo = new Username(username);
+    const roleVo = new Role(role);
+    const statusVo = new Status(Number(status));
+
+    const updateUser = new AdminUserEntity({
+      email: emailVo.email,
+      username: usernameVo.username,
+      role: roleVo.role,
+      status: statusVo.status,
+    });
+
+    return updateUser;
   }
 }

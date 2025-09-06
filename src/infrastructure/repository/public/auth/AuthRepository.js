@@ -21,6 +21,9 @@ export default class AuthRepository {
         status: true,
       },
     });
+    if (!newUser) {
+      return null;
+    }
 
     return new Auth(newUser);
   }
@@ -40,6 +43,9 @@ export default class AuthRepository {
         status: true,
       },
     });
+    if (!user) {
+      return null;
+    }
 
     return new Auth(user);
   }
@@ -55,6 +61,9 @@ export default class AuthRepository {
         status: true,
       },
     });
+    if (!user) {
+      return null;
+    }
 
     return new Auth(user);
   }

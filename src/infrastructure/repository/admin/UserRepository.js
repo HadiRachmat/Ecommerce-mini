@@ -2,16 +2,9 @@ import Prisma from '../../prisma/prismaClient.js';
 import AdminUserEntity from '../../../domain/entities/admin/user/AdminUserEntity.js';
 
 export default class AdminUserRepository {
-  static async createAdminUser(user) {
-    const { email, username, password, role, status } = user;
+  static async createUser(user) {
     const newUser = await Prisma.users.create({
-      data: {
-        email,
-        username,
-        password,
-        role,
-        status,
-      },
+      data: user,
       select: {
         id: true,
         email: true,
@@ -21,10 +14,8 @@ export default class AdminUserRepository {
         status: true,
       },
     });
-    if (!newUser) {
-      return null;
-    }
-    return new AdminUserEntity(newUser);
+
+    return newUser ? new AdminUserEntity(newUser) : null;
   }
 
   static async findByEmail(email) {
@@ -36,10 +27,8 @@ export default class AdminUserRepository {
         username: true,
       },
     });
-    if (!user) {
-      return null;
-    }
-    return new AdminUserEntity(user);
+
+    return user ? new AdminUserEntity(user) : null;
   }
 
   static async findByUsername(username) {
@@ -51,9 +40,71 @@ export default class AdminUserRepository {
         username: true,
       },
     });
-    if (!existingUsername) {
+    return existingUsername ? new AdminUserEntity(existingUsername) : null;
+  }
+
+  static async findById(id) {
+    const user = await Prisma.users.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        password: true,
+        role: true,
+        status: true,
+      },
+    });
+    if (!user) {
       return null;
     }
-    return new AdminUserEntity(existingUsername);
+    return new AdminUserEntity(user);
+  }
+
+  static async updatePassword(id, newPassword) {
+    const user = await Prisma.users.update({
+      where: { id },
+      data: {
+        password: newPassword,
+      },
+    });
+    if (!user) {
+      return null;
+    }
+
+    return new AdminUserEntity(user);
+  }
+
+  static async findAllUsers() {
+    const users = await Prisma.users.findMany({
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        role: true,
+        status: true,
+      },
+    });
+    if (!users) {
+      return null;
+    }
+
+    return users.map((user) => new AdminUserEntity(user));
+  }
+
+  static async updateUser(id, updateUser) {
+    const user = await Prisma.users.update({
+      where: { id },
+      data: updateUser,
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        role: true,
+        status: true,
+      },
+    });
+
+    return user ? new AdminUserEntity(user) : null;
   }
 }

@@ -5,4 +5,8 @@ export default class AdminUserMapper {
     if (!user) return null;
     return AdminUserDTO.userEntityToDTO(user);
   }
+
+  static userDTOList (users) {
+    return users.map((user) => this.userDTO(user));
+  }
 }

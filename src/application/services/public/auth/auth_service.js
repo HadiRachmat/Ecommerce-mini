@@ -3,7 +3,11 @@ import AuthFactory from '../../../../domain/factory/public/auth/AuthFactory.js';
 import { ResponseError } from '../../../../error/ResponseError.js';
 // import UserDTO from '../../../../infrastructure/DTO/userDTO.js';
 import userMapper from '../../../../infrastructure/mappers/userMapper.js';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../../../../helpers/jwt_token_helper.js';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from '../../../../helpers/jwt_token_helper.js';
 
 const registerServices = async (requestData) => {
   const { confirmPassword, ...requestDTO } = requestData;
@@ -33,8 +37,9 @@ const loginServices = async (requestData) => {
 
   const user = await AuthRepository.findByEmail(email);
   if (!user) {
-    throw new ResponseError(400, 'Invalid email or password');
+    throw new ResponseError(404, 'User not found');
   }
+
   const requestLoginFactory = await AuthFactory.loginUser({
     email,
     password,
@@ -69,8 +74,8 @@ const loginServices = async (requestData) => {
   return finalData;
 };
 
-const refreshToken = async ( request ) => {
-  if(!request) {
+const refreshToken = async (request) => {
+  if (!request) {
     throw new ResponseError(400, 'Invalid request');
   }
 
@@ -84,19 +89,19 @@ const refreshToken = async ( request ) => {
     id: user.id,
     email: user.getEmail(),
     role: Number(user.getRole()),
-  }
-  const newAccessToken = generateAccessToken (payloadToken)
+  };
+  const newAccessToken = generateAccessToken(payloadToken);
 
   const finalData = {
     message: 'Token refreshed successfully',
-    accessToken: newAccessToken
-  }
+    accessToken: newAccessToken,
+  };
 
   return finalData;
-}
+};
 
 export default {
   registerServices,
   loginServices,
-  refreshToken
+  refreshToken,
 };
