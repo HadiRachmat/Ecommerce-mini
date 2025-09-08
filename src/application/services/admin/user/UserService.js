@@ -6,8 +6,6 @@ import AdminUserMapper from '../../../../infrastructure/mappers/admin/AdminUserM
 import AttachmentRepository from '../../../../infrastructure/repository/admin/attachmentRepository.js';
 import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
 
-import { generateFilePath } from '../../../../helpers/multer_helpers.js';
-
 /**
  * CREATE ADMIN USER SERVICE
  * @param {*} requestData

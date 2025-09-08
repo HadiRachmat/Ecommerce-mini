@@ -2,6 +2,7 @@ import express from 'express';
 import { AuthMiddleware, AuthorizeRole } from '../../../middleware/AuthMiddleware.js';
 
 import AdminUserController from '../../controller/admin/user/UserController.js';
+import userAdminController from '../../controller/admin/userAdmin/userAdminController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
 import upload from '../../../helpers/multer_helpers.js';
@@ -61,10 +62,8 @@ AdminRoute.post(
   '/api/admin/user-admin/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create User Admin route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  userAdminController.create
 );
 AdminRoute.get(
   '/api/admin/user-admin',
