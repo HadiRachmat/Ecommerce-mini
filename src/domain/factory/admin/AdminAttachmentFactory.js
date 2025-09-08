@@ -38,7 +38,7 @@ export default class AdminAttachmentFactory {
       attachmentableId: attachmentAbleIdVo.attachmentableId,
       attachmentableType: attachmentAbleTypeVo.attachmentableType,
     });
-
+    
     return attachment;
   }
 }

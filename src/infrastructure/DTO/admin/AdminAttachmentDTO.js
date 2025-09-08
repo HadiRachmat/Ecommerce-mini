@@ -1,3 +1,5 @@
+import { generateFilePath } from '../../../helpers/multer_helpers.js';
+
 export default class AdminAttachmentDTO {
   constructor({
     id,
@@ -5,6 +7,7 @@ export default class AdminAttachmentDTO {
     filePath,
     filetype,
     filesize,
+    fileUrl,
     attachmentableType,
     attachmentableId,
   } = {}) {
@@ -15,6 +18,7 @@ export default class AdminAttachmentDTO {
     this.filesize = filesize;
     this.attachmentableType = attachmentableType;
     this.attachmentableId = attachmentableId;
+    this.fileUrl = fileUrl;
   }
   static attachmentToDTO(attachment) {
     if (!attachment) return null;
@@ -29,4 +33,11 @@ export default class AdminAttachmentDTO {
     });
   }
 
+  static attachmentFilePathToDTO(attachment) {
+    if (!attachment) return null;
+    return new AdminAttachmentDTO({
+      filePath: attachment.filePath,
+      fileUrl: generateFilePath(attachment.filePath),
+    });
+  }
 }

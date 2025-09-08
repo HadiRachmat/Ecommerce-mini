@@ -25,6 +25,12 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+export const generateFilePath = (filepath) => {
+  if (!filepath) return null;
+  const filename = path.basename(filepath);
+  return `${process.env.BASE_URL || 'http://localhost:3000'}/upload/${filename}`;
+};
+
 const upload = multer({
   storage,
   fileFilter,

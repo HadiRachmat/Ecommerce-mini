@@ -6,6 +6,8 @@ import AdminUserMapper from '../../../../infrastructure/mappers/admin/AdminUserM
 import AttachmentRepository from '../../../../infrastructure/repository/admin/attachmentRepository.js';
 import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
 
+import { generateFilePath } from '../../../../helpers/multer_helpers.js';
+
 /**
  * CREATE ADMIN USER SERVICE
  * @param {*} requestData
@@ -27,6 +29,9 @@ const createAdminUserService = async (file, requestData) => {
   }
 
   const newUser = await AdminUserRepository.createUser(requestFactory);
+  if (!newUser) {
+    throw new ResponseError(500, 'Failed to create user');
+  }
   let newAttachment = null;
   if (file) {
     // If there's a file, handle the attachment creation
@@ -45,7 +50,11 @@ const createAdminUserService = async (file, requestData) => {
   const finalData = {
     message: 'Admin user created successfully',
     user: AdminUserMapper.userDTO(newUser),
-    attachment: file ? AdminAttachmentMapper.attachmentDTO(newAttachment) : null,
+    attachment: file
+      ? AdminAttachmentMapper.attachmentFilePathDTO({
+          filePath: newAttachment.getFilepath(),
+        })
+      : null,
   };
 
   return finalData;
@@ -99,7 +108,9 @@ const AdminFindUserById = async (id) => {
   const finalData = {
     message: 'User retrieved successfully',
     user: AdminUserMapper.userDTO(user),
-    attachment: AdminAttachmentMapper.attachmentDTO(attachment),
+    attachment: AdminAttachmentMapper.attachmentFilePathDTO({
+      filePath: attachment ? attachment.getFilepath() : null,
+    }),
   };
   return finalData;
 };
@@ -149,7 +160,7 @@ const AdminDeleteUser = async (id) => {
   if (!user) {
     throw new ResponseError(404, 'User not found');
   }
-  
+
   const currentAttachment = await AttachmentRepository.findAttachmentAble(user.getId(), 'user');
   if (currentAttachment) {
     await AttachmentRepository.deleteAttachment(currentAttachment.getId());

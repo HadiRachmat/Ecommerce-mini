@@ -9,4 +9,8 @@ export default class AdminAttachmentMapper {
   static attachmentDTOList(attachments) {
     return attachments.map((attachment) => this.attachmentDTO(attachment));
   }
+
+  static attachmentFilePathDTO(filePath) {
+    return AdminAttachmentDTO.attachmentFilePathToDTO(filePath);
+  }
 }
