@@ -477,6 +477,9 @@ components:
           type: string
         filetype:
           type: string
+        filesize:
+          type: integer
+          format: int32
         attachmentableId:
           type: integer
           format: int32
@@ -493,6 +496,7 @@ components:
         - filename
         - filePath
         - filetype
+        - filesize
         - attachmentableId
         - attachmentableType
         - createdAt

@@ -203,6 +203,7 @@ model attachment {
   filename           String   @db.VarChar(100)
   filePath           String   @db.VarChar(255)
   filetype           String   @db.VarChar(50)
+  filesize           Int      @db.Integer
   attachmentableId   Int      @db.Integer
   attachmentableType String   @db.VarChar(50)
   createdAt          DateTime @default(now()) @db.Timestamp(6)

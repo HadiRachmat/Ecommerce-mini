@@ -107,4 +107,13 @@ export default class AdminUserRepository {
 
     return user ? new AdminUserEntity(user) : null;
   }
+
+  static async deleteUser (userId) {
+    const user = await Prisma.users.delete({
+      where: { 
+        id: userId
+      }
+    });
+    return user ? new AdminUserEntity(user) : null;
+  }
 }

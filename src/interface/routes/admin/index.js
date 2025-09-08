@@ -4,6 +4,7 @@ import { AuthMiddleware, AuthorizeRole } from '../../../middleware/AuthMiddlewar
 import AdminUserController from '../../controller/admin/user/UserController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
+import upload from '../../../helpers/multer_helpers.js';
 
 const AdminRoute = express.Router();
 
@@ -16,6 +17,7 @@ AdminRoute.post(
   '/api/admin/user/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
+  upload.single('attachment'),
   AdminUserController.create
 );
 AdminRoute.get(
@@ -34,6 +36,7 @@ AdminRoute.put(
   '/api/admin/user/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
+  upload.single('attachment'),
   AdminUserController.updateUser
 );
 AdminRoute.put(
@@ -46,10 +49,7 @@ AdminRoute.delete(
   '/api/admin/user/:id/delete',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Delete User route is under construction' });
-    next();
-  }
+  AdminUserController.deleteUser
 );
 
 /*

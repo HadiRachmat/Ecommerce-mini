@@ -11,8 +11,8 @@ import { ResponseError } from '../../../error/ResponseError.js';
 export default class AdminUserFactory {
   /**
    * ADMIN CREATE USER ( WITH PASSWORD )
-   * @param {*} param0 
-   * @returns 
+   * @param {*} param0
+   * @returns
    */
   static async createUser({ email, username, password, role, status }) {
     const emailVo = new Email(email.trim().toLowerCase());
@@ -39,8 +39,8 @@ export default class AdminUserFactory {
 
   /**
    * UPDATE PASSWORD ONLY ( CHANGE PASSWORD )
-   * @param {*} param0 
-   * @returns 
+   * @param {*} param0
+   * @returns
    */
   static async updatePassword({ user, oldPassword, newPassword }) {
     const oldPasswordVo = new Password(oldPassword);
@@ -62,20 +62,20 @@ export default class AdminUserFactory {
 
   /**
    * UPDATE USER ( WITHOUT PASSWORD )
-   * @param {*} param0 
-   * @returns 
+   * @param {*} param0
+   * @returns
    */
   static async updateUser({ email, username, role, status }) {
-    const emailVo = new Email(email.trim().toLowerCase());
-    const usernameVo = new Username(username);
-    const roleVo = new Role(role);
-    const statusVo = new Status(Number(status));
+    const emailVo = email ? new Email(email.trim().toLowerCase()) : null;
+    const usernameVo = username ? new Username(username) : null;
+    const roleVo = role ? new Role(role) : null;
+    const statusVo = status !== undefined ? new Status(Number(status)) : null;
 
     const updateUser = new AdminUserEntity({
-      email: emailVo.email,
-      username: usernameVo.username,
-      role: roleVo.role,
-      status: statusVo.status,
+      email: emailVo ? emailVo.email : undefined,
+      username: usernameVo ? usernameVo.username : undefined,
+      role: roleVo ? roleVo.role : undefined,
+      status: statusVo ? statusVo.status : undefined,
     });
 
     return updateUser;
