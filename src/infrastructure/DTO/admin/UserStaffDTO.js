@@ -1,5 +1,6 @@
 export default class UserStaffDTO {
-  constructor({ userId, fullname, phone, address, position } = {}) {
+  constructor({id, userId, fullname, phone, address, position } = {}) {
+    this.id = id;
     this.userId = userId;
     this.fullname = fullname;
     this.phone = phone;
@@ -9,6 +10,7 @@ export default class UserStaffDTO {
 
   static userStaffEntityToDTO(userStaff) {
     return new UserStaffDTO({
+      id: userStaff.getId(),
       userId: userStaff.getUserId(),
       fullname: userStaff.getFullname(),
       phone: userStaff.getPhone(),

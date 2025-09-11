@@ -94,8 +94,76 @@ const findUserStaffById = async (id) => {
 
   return finalData;
 };
+
+const updateUserStaff = async (id, request, file) => {
+  const findUserStaff = await UserStaffRepository.findUserStaffById(id);
+  if (!findUserStaff) {
+    throw new ResponseError(400, 'user staff isn`t found');
+  }
+
+  const userStaffRequest = await UserStaffFactory.update({
+    ...request,
+  });
+  const updateUserStaff = await UserStaffRepository.update(findUserStaff.getId(), userStaffRequest);
+  if (!updateUserStaff) {
+    throw new ResponseError(500, 'failed to update user staff');
+  }
+
+  let updateAttachment = null;
+  if (file) {
+    const findAttachmentAble = await AttachmentRepository.findAttachmentAble(
+      findUserStaff.getId(),
+      'User Staff'
+    );
+    if (findAttachmentAble) {
+      await AttachmentRepository.deleteAttachment(findAttachmentAble.getId());
+    }
+    const attachmentRequest = await AdminAttachmentFactory.createAttachment({
+      filename: file.originalname,
+      filepath: file.path,
+      filetype: file.mimetype,
+      filesize: file.size,
+      attachmentAbleId: findUserStaff.getId(),
+      attachmentAbletype: 'User Staff',
+    });
+    updateAttachment = await AttachmentRepository.createAttachment(attachmentRequest);
+  }
+
+  const finalData = {
+    message: 'user staff updated successfully',
+    userStaff: UserStaffMappers.userStaffToDto(updateUserStaff),
+    attachment: file
+      ? AdminAttachmentMapper.attachmentFilePathDTO({
+          filePath: updateAttachment.getFilepath(),
+        })
+      : null,
+  };
+
+  return finalData;
+};
+
+const removeUserStaff = async (id) => {
+  const findUserStaff = await UserStaffRepository.findUserStaffById(id);
+  if (!findUserStaff) {
+    throw new ResponseError(400, 'user staff isn`t found');
+  }
+
+  const removeAttachment = await AttachmentRepository.findAttachmentAble(
+    findUserStaff.getId(),
+    'User Staff'
+  );
+  if (removeAttachment) {
+    await AttachmentRepository.deleteAttachment(removeAttachment.getId());
+  }
+
+  await UserStaffRepository.removeUserStaff(findUserStaff.getId());
+
+  return { message: 'user staff deleted successfully' };
+};
 export default {
   createUserStaff,
   findAllUserStaff,
   findUserStaffById,
+  updateUserStaff,
+  removeUserStaff
 };

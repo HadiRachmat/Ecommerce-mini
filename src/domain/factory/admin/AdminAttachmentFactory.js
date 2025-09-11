@@ -1,11 +1,18 @@
-import Filename from "../../valueObject/admin/attachmentVo/filename.js";
-import Filetype from "../../valueObject/admin/attachmentVo/filetype.js";
-import AttachmentAbleId from "../../valueObject/admin/attachmentVo/attachmentAbleId.js";
-import AttachmentAbleType from "../../valueObject/admin/attachmentVo/attachmentAbleType.js";
-import AttachmentEntity from "../../entities/admin/attachment/attachmentEntity.js";
+import Filename from '../../valueObject/admin/attachmentVo/filename.js';
+import Filetype from '../../valueObject/admin/attachmentVo/filetype.js';
+import AttachmentAbleId from '../../valueObject/admin/attachmentVo/attachmentAbleId.js';
+import AttachmentAbleType from '../../valueObject/admin/attachmentVo/attachmentAbleType.js';
+import AttachmentEntity from '../../entities/admin/attachment/attachmentEntity.js';
 
 export default class AdminAttachmentFactory {
-  static async createAttachment ({filename, filesize, filetype, filepath, attachmentAbleId, attachmentAbletype}) {
+  static async createAttachment({
+    filename,
+    filesize,
+    filetype,
+    filepath,
+    attachmentAbleId,
+    attachmentAbletype,
+  }) {
     const filenameVo = new Filename(filename);
     const filetypeVo = new Filetype(filetype);
     const attachmentAbleIdVo = new AttachmentAbleId(attachmentAbleId);
@@ -23,7 +30,15 @@ export default class AdminAttachmentFactory {
     return attachment;
   }
 
-  static async updateAttachment ({id, filename, filesize, filetype, filepath, attachmnetAbleId, attachmentAbletype}){
+  static async updateAttachment({
+    id,
+    filename,
+    filesize,
+    filetype,
+    filepath,
+    attachmnetAbleId,
+    attachmentAbletype,
+  }) {
     const filenameVo = new Filename(filename);
     const filetypeVo = new Filetype(filetype);
     const attachmentAbleIdVo = new AttachmentAbleId(attachmnetAbleId);
@@ -38,7 +53,7 @@ export default class AdminAttachmentFactory {
       attachmentableId: attachmentAbleIdVo.attachmentableId,
       attachmentableType: attachmentAbleTypeVo.attachmentableType,
     });
-    
+
     return attachment;
   }
 }
