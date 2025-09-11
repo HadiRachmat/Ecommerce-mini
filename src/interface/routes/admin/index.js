@@ -123,19 +123,14 @@ AdminRoute.put(
   '/api/admin/user-staff/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update User Staff route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  AdminUserStaffController.update
 );
 AdminRoute.delete(
   '/api/admin/user-staff/:id/delete',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Delete User Staff route is under construction' });
-    next();
-  }
+  AdminUserStaffController.remove
 );
 
 /*

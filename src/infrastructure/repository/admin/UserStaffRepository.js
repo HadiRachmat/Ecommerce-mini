@@ -36,7 +36,7 @@ export default class UserStaffRepository {
     return findUserId ? new UserStaffEntity(findUserId) : null;
   }
 
-  static async findUserStaffById ( userStaffId ) {
+  static async findUserStaffById(userStaffId) {
     const userStaffById = await Prisma.usersStaff.findUnique({
       where: {
         id: userStaffId,
@@ -51,7 +51,7 @@ export default class UserStaffRepository {
       },
     });
 
-    return userStaffById ? new UserStaffEntity(userStaffById) : null
+    return userStaffById ? new UserStaffEntity(userStaffById) : null;
   }
 
   static async findAllUserStaff() {
@@ -66,5 +66,30 @@ export default class UserStaffRepository {
     });
 
     return userStaff.map((userStaffData) => new UserStaffEntity(userStaffData));
+  }
+
+  static async update(userStaffId, userStaffData) {
+    const updateUserStaff = await Prisma.usersStaff.update({
+      where: {
+        id: userStaffId,
+      },
+      data: userStaffData,
+      select: {
+        id: true,
+        userId: true,
+        fullname: true,
+        phone: true,
+        address: true,
+        position: true,
+      },
+    });
+
+    return updateUserStaff ? new UserStaffEntity(updateUserStaff) : null;
+  }
+
+  static async removeUserStaff(userStaffId) {
+    const deleteUserStaff = await Prisma.usersStaff.delete({
+      where: { id: userStaffId },
+    });
   }
 }
