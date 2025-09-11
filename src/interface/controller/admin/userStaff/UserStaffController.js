@@ -30,7 +30,22 @@ const getAll = async (req, res, next) => {
     next(error);
   }
 };
+
+const getById = async (req, res, next) => {
+  const userStaffId = Number(req.params.id);
+  try {
+    const result = await AdminUserStaffService.findUserStaffById(userStaffId);
+    res.status(200).json({
+      message: 'user staff get by id successfully',
+      data: result,
+    });
+  } catch (error) {
+    console.log('error', error);
+    next(error);
+  }
+};
 export default {
   create,
   getAll,
+  getById,
 };

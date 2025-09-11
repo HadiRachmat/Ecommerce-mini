@@ -25,11 +25,33 @@ export default class UserStaffRepository {
       },
       select: {
         id: true,
+        userId: true,
         fullname: true,
+        phone: true,
+        address: true,
+        position: true,
       },
     });
 
     return findUserId ? new UserStaffEntity(findUserId) : null;
+  }
+
+  static async findUserStaffById ( userStaffId ) {
+    const userStaffById = await Prisma.usersStaff.findUnique({
+      where: {
+        id: userStaffId,
+      },
+      select: {
+        id: true,
+        userId: true,
+        fullname: true,
+        phone: true,
+        address: true,
+        position: true,
+      },
+    });
+
+    return userStaffById ? new UserStaffEntity(userStaffById) : null
   }
 
   static async findAllUserStaff() {

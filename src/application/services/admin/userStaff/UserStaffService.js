@@ -68,7 +68,34 @@ const findAllUserStaff = async () => {
 
   return finalData;
 };
+
+const findUserStaffById = async (id) => {
+  const userStaffData = await UserStaffRepository.findUserStaffById(id);
+  if (!userStaffData) {
+    throw new ResponseError(400, 'user Staff isn`t found');
+  }
+
+  const attachment = await AttachmentRepository.findAttachmentAble(
+    userStaffData.getId(),
+    'User Staff'
+  );
+  if (!attachment) {
+    return null;
+  }
+
+  const finalData = {
+    userStaff: UserStaffMappers.userStaffToDto(userStaffData),
+    attachment: attachment
+      ? AdminAttachmentMapper.attachmentFilePathDTO({
+          filePath: attachment.getFilepath(),
+        })
+      : null,
+  };
+
+  return finalData;
+};
 export default {
   createUserStaff,
   findAllUserStaff,
+  findUserStaffById,
 };
