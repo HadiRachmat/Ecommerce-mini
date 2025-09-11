@@ -6,7 +6,7 @@ import UserAdminEntity from '../../entities/admin/userAdmin/UserAdminEntity.js';
 import { ResponseError } from '../../../error/ResponseError.js';
 
 export default class UserAdminFactory {
-  static async createUserAdmin({userId, fullname, phone, address, position }) {
+  static async createUserAdmin({ userId, fullname, phone, address, position }) {
     const fullnameVo = new Fullname(fullname);
     const phoneVo = new Phone(phone);
     const addressVo = new Address(address);
@@ -19,6 +19,21 @@ export default class UserAdminFactory {
       address: addressVo.address,
       position: positionVo.position,
     });
+    return userAdmin;
+  }
+
+  static async updateUserAdmin({ fullname, phone, address, position }) {
+    const fullnameVo = new Fullname(fullname);
+    const phoneVo = new Phone(phone);
+    const addressVo = new Address(address);
+    const positionVo = new Position(position);
+
+    const userAdmin = {
+      fullname: fullnameVo.fullname,
+      phone: phoneVo.phone,
+      address: addressVo.address,
+      position: positionVo.position,
+    };
     return userAdmin;
   }
 }

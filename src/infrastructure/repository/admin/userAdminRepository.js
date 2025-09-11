@@ -46,7 +46,7 @@ export default class UserAdminRepository {
         position: true,
       },
     });
-    return userAdmin ? userAdminEntity(userAdmin) : null;
+    return userAdmin ? new userAdminEntity(userAdmin) : null;
   }
 
   static async updateUserAdmin(id, request) {
@@ -62,13 +62,13 @@ export default class UserAdminRepository {
         position: true,
       },
     });
-    return userAdmin ? userAdminEntity(userAdmin) : null;
+    return userAdmin ? new userAdminEntity(userAdmin) : null;
   }
 
   static async deleteUserAdmin(id) {
     const userAdmin = await Prisma.userAdmin.delete({
       where: { id },
     });
-    return userAdmin ? userAdminEntity(userAdmin) : null;
+    return userAdmin ? new userAdminEntity(userAdmin) : null;
   }
 }

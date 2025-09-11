@@ -78,28 +78,20 @@ AdminRoute.get(
   '/api/admin/user-admin/:id',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get By Id User Admin route is under construction' });
-    next();
-  }
+  userAdminController.getById
 );
 AdminRoute.put(
   '/api/admin/user-admin/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Updated User Admin route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  userAdminController.update
 );
 AdminRoute.delete(
   '/api/admin/user-admin/:id/delete',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Delete User Admin route is under construction' });
-    next();
-  }
+  userAdminController.remove
 );
 
 /*
