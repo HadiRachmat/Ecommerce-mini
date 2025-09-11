@@ -55,6 +55,20 @@ const createUserStaff = async (request, file) => {
   return finalData;
 };
 
+const findAllUserStaff = async () => {
+  const findUserStaff = await UserStaffRepository.findAllUserStaff();
+  if (!findUserStaff) {
+    throw new ResponseError(400, 'user isn`t found');
+  }
+
+  const finalData = {
+    message: ' find All User Staff successfully',
+    userStaff: findUserStaff,
+  };
+
+  return finalData;
+};
 export default {
   createUserStaff,
+  findAllUserStaff,
 };

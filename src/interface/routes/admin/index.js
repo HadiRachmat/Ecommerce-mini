@@ -111,10 +111,7 @@ AdminRoute.get(
   '/api/admin/user-staff/',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get User Staff route is under construction' });
-    next();
-  }
+  AdminUserStaffController.getAll
 );
 AdminRoute.get(
   '/api/admin/user-staff/:id',

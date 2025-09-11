@@ -20,15 +20,29 @@ export default class UserStaffRepository {
 
   static async findByUserId(userId) {
     const findUserId = await Prisma.usersStaff.findUnique({
-      where:{
-        userId: userId
+      where: {
+        userId: userId,
       },
       select: {
         id: true,
         fullname: true,
-      }
+      },
     });
 
-    return findUserId ? new UserStaffEntity(findUserId) : null
+    return findUserId ? new UserStaffEntity(findUserId) : null;
+  }
+
+  static async findAllUserStaff() {
+    const userStaff = await Prisma.usersStaff.findMany({
+      select: {
+        id: true,
+        fullname: true,
+        phone: true,
+        address: true,
+        position: true,
+      },
+    });
+
+    return userStaff.map((userStaffData) => new UserStaffEntity(userStaffData));
   }
 }
