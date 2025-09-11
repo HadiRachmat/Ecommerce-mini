@@ -3,6 +3,7 @@ import { AuthMiddleware, AuthorizeRole } from '../../../middleware/AuthMiddlewar
 
 import AdminUserController from '../../controller/admin/user/UserController.js';
 import userAdminController from '../../controller/admin/userAdmin/userAdminController.js';
+import AdminUserStaffController from '../../controller/admin/userStaff/UserStaffController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
 import upload from '../../../helpers/multer_helpers.js';
@@ -103,10 +104,8 @@ AdminRoute.post(
   '/api/admin/user-staff/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create User Staff route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  AdminUserStaffController.create
 );
 AdminRoute.get(
   '/api/admin/user-staff/',

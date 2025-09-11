@@ -60,7 +60,7 @@ model UsersStaff {
   fullname  String   @db.VarChar(100)
   phone     String   @db.VarChar(15)
   address   String   @db.VarChar(255)
-  position  Int      @default(1) @db.SmallInt // 1: superadmin, 2: customer service, 3: warehouse 4: finance 5: marketing
+  position  Int      @db.SmallInt // 1: superadmin, 2: customer service, 3: warehouse 4: finance 5: marketing
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
