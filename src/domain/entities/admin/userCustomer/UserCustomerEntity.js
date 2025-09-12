@@ -37,6 +37,7 @@ export default class UserCustomerEntity {
   getGender() {
     return this.gender;
   }
+  
   getPhone() {
     return this.phone;
   }

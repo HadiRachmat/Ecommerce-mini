@@ -4,6 +4,7 @@ import { AuthMiddleware, AuthorizeRole } from '../../../middleware/AuthMiddlewar
 import AdminUserController from '../../controller/admin/user/UserController.js';
 import userAdminController from '../../controller/admin/userAdmin/userAdminController.js';
 import AdminUserStaffController from '../../controller/admin/userStaff/UserStaffController.js';
+import AdminUserCustomerController from '../../controller/admin/userCustomer/UserCustomerController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
 import upload from '../../../helpers/multer_helpers.js';
@@ -142,28 +143,20 @@ AdminRoute.post(
   '/api/admin/user-customer/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create User Customer route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  AdminUserCustomerController.create
 );
 AdminRoute.get(
   '/api/admin/user-customer',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get User Customer route is under construction' });
-    next();
-  }
+  AdminUserCustomerController.getAll
 );
 AdminRoute.get(
   '/api/admin/user-customer/:id',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get By Id User Customer route is under construction' });
-    next();
-  }
+  AdminUserCustomerController.getById
 );
 AdminRoute.put(
   '/api/admin/user-customer/:id/update',
