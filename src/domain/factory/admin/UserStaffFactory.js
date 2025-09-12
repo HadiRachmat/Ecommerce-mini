@@ -3,6 +3,7 @@ import Fullname from '../../valueObject/admin/userStaffVo/Fullname.js';
 import Phone from '../../valueObject/admin/userStaffVo/Phone.js';
 import Address from '../../valueObject/admin/userStaffVo/Address.js';
 import Position from '../../valueObject/admin/userStaffVo/Position.js';
+import UserStaffEntity from '../../entities/admin/userStaff/UserStaffEntity.js';
 import { ResponseError } from '../../../error/ResponseError.js';
 
 export default class UserStaffFactory {
@@ -13,13 +14,14 @@ export default class UserStaffFactory {
     const AddressVo = new Address(address);
     const positionVo = new Position(Number(position));
 
-    const userStaff = {
+    const userStaff = new UserStaffEntity({
       userId: userIdVo.userId,
       fullname: fullnameVo.fullname,
       phone: phoneVo.phone,
       address: AddressVo.address,
       position: positionVo.position,
-    };
+    });
+
     return userStaff;
   }
 
