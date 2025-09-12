@@ -84,8 +84,77 @@ const getUserCustomerById = async (userCustomerId) => {
   return finalData;
 };
 
+const updateUserCustomer = async (id, request, file) => {
+  const userCustomerId = await UserCustomerRepository.findUserCustomerById(id);
+  if (!userCustomerId) {
+    throw new ResponseError(404, 'user customer isn`t found');
+  }
+  console.log('fullname typeof:', typeof request.fullname, 'value:', request.fullname);
+  const requestFactoryUpdate = await UserCustomerFactory.update({ ...request });
+  const updateUserCustomer = await UserCustomerRepository.update(
+    userCustomerId.getId(),
+    requestFactoryUpdate
+  );
+  let attachment = null;
+  if (file) {
+    const findAttachment = await AttachmentRepository.findAttachmentAble(
+      updateUserCustomer.getId(),
+      'User Customer'
+    );
+    if (findAttachment) {
+      await AttachmentRepository.deleteAttachment(findAttachment.getId());
+    }
+    const attachmentFactory = await AdminAttachmentFactory.createAttachment({
+      filename: file.originalname,
+      filepath: file.path,
+      filetype: file.mimetype,
+      filesize: file.size,
+      attachmentAbleId: updateUserCustomer.getId(),
+      attachmentAbletype: 'User Customer',
+    });
+
+    attachment = await AttachmentRepository.createAttachment(attachmentFactory);
+  }
+
+  const finalData = {
+    message: 'Success update User Customer',
+    userCustomer: UserCustomerMappers.userCustomerToDTO(updateUserCustomer),
+    attachment: file
+      ? AdminAttachmentMapper.attachmentFilePathDTO({
+          filePath: attachment.getFilepath(),
+        })
+      : null,
+  };
+  return finalData;
+};
+
+const removeUserCustomer = async (id) => {
+  const userCustomerId = await UserCustomerRepository.findUserCustomerById(id);
+  if (!userCustomerId) {
+    throw new ResponseError(404, 'user not found');
+  }
+  let attachmentData = null;
+  const attachment = await AttachmentRepository.findAttachmentAble(
+    userCustomerId.getId(),
+    'User Customer'
+  );
+  if (attachment) {
+    attachmentData = await AttachmentRepository.deleteAttachment(attachment.getId());
+  }
+
+  const deleteUserCustomer = await UserCustomerRepository.removeUserCustomer(
+    userCustomerId.getId()
+  );
+  if (attachment === 1 && deleteUserCustomer === 1) {
+    return {
+      message: 'user customer deleted successfuly',
+    };
+  }
+};
 export default {
   createUserCustomer,
   getAllUserCustomer,
   getUserCustomerById,
+  updateUserCustomer,
+  removeUserCustomer
 };

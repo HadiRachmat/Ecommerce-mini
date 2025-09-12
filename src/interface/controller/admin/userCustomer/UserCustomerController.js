@@ -1,6 +1,9 @@
 import AdminUserCustomerService from '../../../../application/services/admin/userCustomer/UserCustomerService.js';
 import { validate } from '../../../../validation/validation.js';
-import { createUserCustomerValidation } from '../../../../validation/admin/userCustomerValidation.js';
+import {
+  createUserCustomerValidation,
+  updateUserCustomerValidation,
+} from '../../../../validation/admin/userCustomerValidation.js';
 const create = async (req, res, next) => {
   const request = req.body;
   const file = req.file;
@@ -44,8 +47,42 @@ const getById = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  const userCustomerId = Number(req.params.id);
+  const request = req.body;
+  const validatedRequest = validate(updateUserCustomerValidation, request);
+  const file = req.file;
+  try {
+    const result = await AdminUserCustomerService.updateUserCustomer(
+      userCustomerId,
+      validatedRequest,
+      file
+    );
+    res.status(200).json({
+      message: 'update User Customer',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const remove = async (req, res, next) => {
+  const userCustomerId = Number(req.params.id);
+  try {
+    const result = await AdminUserCustomerService.removeUserCustomer(userCustomerId);
+    res.status(200).json({
+      message: 'delete user customer',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export default {
   create,
   getAll,
   getById,
+  update,
+  remove,
 };

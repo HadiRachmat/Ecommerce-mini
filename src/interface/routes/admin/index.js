@@ -162,19 +162,14 @@ AdminRoute.put(
   '/api/admin/user-customer/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update User Customer route is under construction' });
-    next();
-  }
+  upload.single('attachment'),
+  AdminUserCustomerController.update
 );
 AdminRoute.delete(
   '/api/admin/user-customer/:id/delete',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Delete User Customer route is under construction' });
-    next();
-  }
+  AdminUserCustomerController.remove
 );
 
 /* 

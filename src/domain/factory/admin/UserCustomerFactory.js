@@ -29,4 +29,24 @@ export default class UserCustomerFactory {
 
     return userCustomer;
   }
+
+  static async update({ fullname, address, placeOfBirth, dateOfBirth, gender, phone }) {
+    const fullnameVo = new Fullname(fullname);
+    const addressVo = new Address(address);
+    const placeOfBirthVo = new PlaceOfBirth(placeOfBirth);
+    const dateOfBirthVo = new DateOfBirth(dateOfBirth);
+    const genderVo = new Gender(Number(gender));
+    const phoneVo = new Phone(phone);
+
+    const userCustomer = new UserCustomerEntity({
+      fullname: fullnameVo.fullname,
+      address: addressVo.address,
+      placeOfBirth: placeOfBirthVo.placeOfBirth,
+      dateOfBirth: dateOfBirthVo.dateOfBirth,
+      gender: genderVo.gender,
+      phone: phoneVo.phone,
+    });
+
+    return userCustomer
+  }
 }
