@@ -180,6 +180,15 @@ components:
           type: string
         description:
           type: string
+        categoryParentId:
+          type: integer
+          format: int32
+        categoryParent:
+          $ref: "#/components/schemas/Categories"
+        categoriesChildren:
+          type: array
+          items:
+            $ref: "#/components/schemas/Categories"
         createdAt:
           type: string
           format: date-time
@@ -193,6 +202,7 @@ components:
       required:
         - id
         - name
+        - categoriesChildren
         - createdAt
         - updatedAt
         - products

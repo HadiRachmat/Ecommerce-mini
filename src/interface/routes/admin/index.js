@@ -5,6 +5,7 @@ import AdminUserController from '../../controller/admin/user/UserController.js';
 import userAdminController from '../../controller/admin/userAdmin/userAdminController.js';
 import AdminUserStaffController from '../../controller/admin/userStaff/UserStaffController.js';
 import AdminUserCustomerController from '../../controller/admin/userCustomer/UserCustomerController.js';
+import AdminCategoriesController from '../../controller/admin/categories/CategoriesController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
 import upload from '../../../helpers/multer_helpers.js';
@@ -181,28 +182,20 @@ AdminRoute.post(
   '/api/admin/categories/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create Categories route is under construction' });
-    next();
-  }
+  upload.none(),
+  AdminCategoriesController.create
 );
 AdminRoute.get(
   '/api/admin/categories',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get Categories route is under construction' });
-    next();
-  }
+  AdminCategoriesController.getAll
 );
 AdminRoute.get(
   '/api/admin/categories/:id',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get By Id Categories route is under construction' });
-    next();
-  }
+  AdminCategoriesController.getById
 );
 AdminRoute.put(
   '/api/admin/categories/:id/update',

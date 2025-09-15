@@ -87,13 +87,16 @@ model UserCustomer {
 }
 
 model Categories {
-  id          Int      @id @default(autoincrement()) @db.Integer
-  name        String   @unique @db.VarChar(100)
-  description String?  @db.VarChar(255)
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+  id               Int      @id @default(autoincrement()) @db.Integer
+  name             String   @unique @db.VarChar(100)
+  description      String?  @db.VarChar(255)
+  categoryParentId Int?     @db.Integer
+  createdAt        DateTime @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime @updatedAt @db.Timestamp(6)
 
-  products Products[]
+  categoryParent     Categories?  @relation("SubCategories", fields: [categoryParentId], references: [id], onDelete: Cascade)
+  categoriesChildren Categories[] @relation("SubCategories")
+  products           Products[]
 
   @@map("categories")
 }
