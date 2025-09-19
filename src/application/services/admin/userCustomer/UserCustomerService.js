@@ -5,7 +5,7 @@ import AttachmentRepository from '../../../../infrastructure/repository/admin/at
 import AdminAttachmentFactory from '../../../../domain/factory/admin/AdminAttachmentFactory.js';
 
 import UserCustomerMappers from '../../../../infrastructure/mappers/admin/UserCustomerMappers.js';
-import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
+import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachmentMapper.js';
 import { ResponseError } from '../../../../error/ResponseError.js';
 
 const createUserCustomer = async (request, file) => {

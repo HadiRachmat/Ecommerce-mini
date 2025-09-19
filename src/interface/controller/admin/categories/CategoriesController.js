@@ -1,6 +1,10 @@
 import AdminCategoriesService from '../../../../application/services/admin/categories/CategoriesService.js';
 import { validate } from '../../../../validation/validation.js';
-import { createCategoryValidation } from '../../../../validation/admin/categoriesValidation.js';
+import {
+  createCategoryValidation,
+  updateCategoryValidation,
+} from '../../../../validation/admin/categoriesValidation.js';
+import { ResponseError } from '../../../../error/ResponseError.js';
 
 const create = async (req, res, next) => {
   const request = req.body;
@@ -41,8 +45,26 @@ const getById = async (req, res, next) => {
   }
 };
 
+const updated = async (req, res, next) => {
+  const id = Number(req.params.id);
+  const request = req.body;
+  console.log('request: ', request);
+  const validated = validate(updateCategoryValidation, request);
+  try {
+    const result = await AdminCategoriesService.updateCategory(id, validated);
+    res.status(200).json({
+      message: 'Category updated',
+      data: result,
+    });
+  } catch (error) {
+    console.log('message error: ', error);
+    next(error);
+  }
+};
+
 export default {
   create,
   getAll,
-  getById
+  getById,
+  updated,
 };

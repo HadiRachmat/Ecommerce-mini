@@ -183,29 +183,34 @@ components:
         categoryParentId:
           type: integer
           format: int32
-        categoryParent:
-          $ref: "#/components/schemas/Categories"
-        categoriesChildren:
-          type: array
-          items:
-            $ref: "#/components/schemas/Categories"
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
+        categoryParent:
+          $ref: "#/components/schemas/Categories"
+        categoriesChildren:
+          type: array
+          items:
+            $ref: "#/components/schemas/Categories"
         products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Products"
+        productsAsChild:
           type: array
           items:
             $ref: "#/components/schemas/Products"
       required:
         - id
         - name
-        - categoriesChildren
         - createdAt
         - updatedAt
+        - categoriesChildren
         - products
+        - productsAsChild
     Products:
       type: object
       properties:
@@ -215,13 +220,15 @@ components:
         categoryId:
           type: integer
           format: int32
+        subCategoryId:
+          type: integer
+          format: int32
         name:
           type: string
         description:
           type: string
         price:
-          type: number
-          format: double
+          type: string
         stock:
           type: integer
           format: int32
@@ -232,6 +239,8 @@ components:
           type: string
           format: date-time
         category:
+          $ref: "#/components/schemas/Categories"
+        subCategory:
           $ref: "#/components/schemas/Categories"
         orderDetails:
           type: array

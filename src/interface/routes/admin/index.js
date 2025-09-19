@@ -6,6 +6,7 @@ import userAdminController from '../../controller/admin/userAdmin/userAdminContr
 import AdminUserStaffController from '../../controller/admin/userStaff/UserStaffController.js';
 import AdminUserCustomerController from '../../controller/admin/userCustomer/UserCustomerController.js';
 import AdminCategoriesController from '../../controller/admin/categories/CategoriesController.js';
+import AdminProductsController from '../../controller/admin/product/ProductController.js';
 
 import * as CONSTANT from '../../../configuration/constant.js';
 import upload from '../../../helpers/multer_helpers.js';
@@ -201,10 +202,8 @@ AdminRoute.put(
   '/api/admin/categories/:id/update',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Updated Categories route is under construction' });
-    next();
-  }
+  upload.none(),
+  AdminCategoriesController.updated
 );
 AdminRoute.delete(
   '/api/admin/categories/:id/delete',
@@ -225,10 +224,8 @@ AdminRoute.post(
   '/api/admin/products/create',
   AuthMiddleware,
   AuthorizeRole(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create Products route is under construction' });
-    next();
-  }
+  upload.array('attachment', 5),
+  AdminProductsController.create
 );
 AdminRoute.get(
   '/api/admin/products',

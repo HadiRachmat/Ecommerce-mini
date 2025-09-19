@@ -53,9 +53,6 @@ export const AuthMiddleware = async (req, res, next) => {
 export const AuthorizeRole = (...allowedRoles) => {
   return (req, res, next) => {
     const userRole = Number(req.user?.role);
-    console.log('User role from JWT:', req.user.role);
-    console.log('User role after Number():', userRole);
-    console.log('Allowed roles:', allowedRoles);
     if (userRole === CONSTANT.BASE_ROLE_ADMIN) {
       return next(); // Admin memiliki akses penuh
     }

@@ -5,7 +5,7 @@ import AdminAttachmentFactory from '../../../../domain/factory/admin/AdminAttach
 import UserStaffFactory from '../../../../domain/factory/admin/UserStaffFactory.js';
 import UserStaffMappers from '../../../../infrastructure/mappers/admin/UserStaffMappers.js';
 import { ResponseError } from '../../../../error/ResponseError.js';
-import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
+import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachmentMapper.js';
 
 const createUserStaff = async (request, file) => {
   const findUser = await UserRepository.findById(request.userId);

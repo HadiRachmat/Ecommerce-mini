@@ -9,20 +9,20 @@ export default class AdminAttachmentFactory {
     filename,
     filesize,
     filetype,
-    filepath,
-    attachmentAbleId,
-    attachmentAbletype,
+    filePath,
+    attachmentableId,
+    attachmentableType,
   }) {
     const filenameVo = new Filename(filename);
     const filetypeVo = new Filetype(filetype);
-    const attachmentAbleIdVo = new AttachmentAbleId(attachmentAbleId);
-    const attachmentAbleTypeVo = new AttachmentAbleType(attachmentAbletype);
+    const attachmentAbleIdVo = new AttachmentAbleId(attachmentableId);
+    const attachmentAbleTypeVo = new AttachmentAbleType(attachmentableType);
 
     const attachment = new AttachmentEntity({
       filename: filenameVo.filename,
       filesize,
       filetype: filetypeVo.filetype,
-      filePath: filepath,
+      filePath: filePath,
       attachmentableId: attachmentAbleIdVo.attachmentableId,
       attachmentableType: attachmentAbleTypeVo.attachmentableType,
     });
@@ -50,8 +50,8 @@ export default class AdminAttachmentFactory {
       filesize,
       filetype: filetypeVo.filetype,
       filePath: filepath,
-      attachmentableId: attachmentAbleIdVo.attachmentableId,
-      attachmentableType: attachmentAbleTypeVo.attachmentableType,
+      attachmentAbleId: attachmentAbleIdVo.attachmentableId,
+      attachmentAbleType: attachmentAbleTypeVo.attachmentableType,
     });
 
     return attachment;

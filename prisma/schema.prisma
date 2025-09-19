@@ -97,21 +97,24 @@ model Categories {
   categoryParent     Categories?  @relation("SubCategories", fields: [categoryParentId], references: [id], onDelete: Cascade)
   categoriesChildren Categories[] @relation("SubCategories")
   products           Products[]
+  productsAsChild    Products[]   @relation("SubCategories")
 
   @@map("categories")
 }
 
 model Products {
-  id          Int      @id @default(autoincrement()) @db.Integer
-  categoryId  Int      @db.Integer
-  name        String   @db.VarChar(100)
-  description String?  @db.VarChar(255)
-  price       Float    @db.DoublePrecision
-  stock       Int      @db.Integer
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+  id            Int      @id @default(autoincrement()) @db.Integer
+  categoryId    Int      @db.Integer
+  subCategoryId Int?     @db.Integer
+  name          String   @db.VarChar(100)
+  description   String?  @db.VarChar(255)
+  price         String   @db.VarChar(100)
+  stock         Int      @db.Integer
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @db.Timestamp(6)
 
   category     Categories   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subCategory  Categories?  @relation("SubCategories", fields: [subCategoryId], references: [id], onDelete: Cascade)
   orderDetails OrderItems[]
   cartItems    CartsItems[]
 

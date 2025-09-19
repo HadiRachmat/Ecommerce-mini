@@ -120,4 +120,19 @@ export default class CategoriesRepository {
 
     return categories.map((category) => new CategoriesEntity(category));
   }
+
+  static async updateCategory(categoryId, request){
+    const updatedCategory = await Prisma.categories.update({
+      where: { id: categoryId },
+      data: request,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        categoryParentId: true,
+        categoriesChildren:true
+      },
+    });
+    return updatedCategory ? new CategoriesEntity(updatedCategory) : null;
+  }
 }

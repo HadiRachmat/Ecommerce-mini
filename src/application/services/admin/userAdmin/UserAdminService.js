@@ -3,7 +3,7 @@ import AttachmentRepository from '../../../../infrastructure/repository/admin/at
 import UserAdminFactory from '../../../../domain/factory/admin/UserAdminFactory.js';
 import AdminAttachmentFactory from '../../../../domain/factory/admin/AdminAttachmentFactory.js';
 import UserAdminMappers from '../../../../infrastructure/mappers/admin/UserAdminMappers.js';
-import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
+import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachmentMapper.js';
 import { ResponseError } from '../../../../error/ResponseError.js';
 
 const createUserAdmin = async (userId, request, file) => {

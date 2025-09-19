@@ -6,6 +6,12 @@ const createCategoryValidation = Joi.object({
   categoryParentId: Joi.number().integer().allow(null),
 });
 
+const updateCategoryValidation = Joi.object({
+  name: Joi.string().max(100).optional(),
+  description: Joi.string().max(255).allow(null, 'category description'),
+  categoryParentId: Joi.number().integer().allow(null),
+})
 export {
   createCategoryValidation,
+  updateCategoryValidation
 }

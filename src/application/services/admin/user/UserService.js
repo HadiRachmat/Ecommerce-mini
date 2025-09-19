@@ -4,7 +4,7 @@ import AdminAttachmentFactory from '../../../../domain/factory/admin/AdminAttach
 import { ResponseError } from '../../../../error/ResponseError.js';
 import AdminUserMapper from '../../../../infrastructure/mappers/admin/AdminUserMapper.js';
 import AttachmentRepository from '../../../../infrastructure/repository/admin/attachmentRepository.js';
-import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachment.js';
+import AdminAttachmentMapper from '../../../../infrastructure/mappers/admin/AdminAttachmentMapper.js';
 
 /**
  * CREATE ADMIN USER SERVICE
