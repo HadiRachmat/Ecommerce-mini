@@ -37,9 +37,9 @@ const createAdminUserService = async (file, requestData) => {
       filename: file.originalname,
       filesize: file.size,
       filetype: file.mimetype,
-      filepath: file.path,
-      attachmentAbleId: newUser.id,
-      attachmentAbletype: 'user',
+      filePath: file.path,
+      attachmentableId: newUser.id,
+      attachmentableType: 'user',
     });
     newAttachment = await AttachmentRepository.createAttachment(requestAttachmentFactory);
   } else {
@@ -138,9 +138,9 @@ const AdminUpdateUser = async (id, requestData, file) => {
       filename: file.originalname,
       filesize: file.size,
       filetype: file.mimetype,
-      filepath: file.path,
-      attachmentAbleId: updateUser.getId(),
-      attachmentAbletype: 'user',
+      filePath: file.path,
+      attachmentableId: updateUser.getId(),
+      attachmentableType: 'user',
     });
     newAttachment = await AttachmentRepository.createAttachment(requestAttachmentFactory);
   }

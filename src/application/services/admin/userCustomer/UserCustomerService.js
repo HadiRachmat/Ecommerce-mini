@@ -34,11 +34,11 @@ const createUserCustomer = async (request, file) => {
   if (file) {
     const attachment = await AdminAttachmentFactory.createAttachment({
       filename: file.originalname,
-      filepath: file.path,
+      filePath: file.path,
       filetype: file.mimetype,
       filesize: file.size,
-      attachmentAbleId: newUserCustomer.getId(),
-      attachmentAbletype: 'User Customer',
+      attachmentableId: newUserCustomer.getId(),
+      attachmentableType: 'User Customer',
     });
     createAttachment = await AttachmentRepository.createAttachment(attachment);
   } else {
@@ -106,11 +106,11 @@ const updateUserCustomer = async (id, request, file) => {
     }
     const attachmentFactory = await AdminAttachmentFactory.createAttachment({
       filename: file.originalname,
-      filepath: file.path,
+      filePath: file.path,
       filetype: file.mimetype,
       filesize: file.size,
-      attachmentAbleId: updateUserCustomer.getId(),
-      attachmentAbletype: 'User Customer',
+      attachmentableId: updateUserCustomer.getId(),
+      attachmentableType: 'User Customer',
     });
 
     attachment = await AttachmentRepository.createAttachment(attachmentFactory);

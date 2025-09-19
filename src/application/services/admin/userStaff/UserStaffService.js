@@ -32,11 +32,11 @@ const createUserStaff = async (request, file) => {
     const attachmentRequest = await AdminAttachmentFactory.createAttachment({
       userId: findUser.getId(),
       filename: file.originalname,
-      filepath: file.path,
+      filePath: file.path,
       filetype: file.mimetype,
       filesize: file.size,
-      attachmentAbleId: createUserStaff.getId(),
-      attachmentAbletype: 'User Staff',
+      attachmentableId: createUserStaff.getId(),
+      attachmentableType: 'User Staff',
     });
     createAttachment = await AttachmentRepository.createAttachment(attachmentRequest);
   } else {
@@ -120,11 +120,11 @@ const updateUserStaff = async (id, request, file) => {
     }
     const attachmentRequest = await AdminAttachmentFactory.createAttachment({
       filename: file.originalname,
-      filepath: file.path,
+      filePath: file.path,
       filetype: file.mimetype,
       filesize: file.size,
-      attachmentAbleId: findUserStaff.getId(),
-      attachmentAbletype: 'User Staff',
+      attachmentableId: findUserStaff.getId(),
+      attachmentableType: 'User Staff',
     });
     updateAttachment = await AttachmentRepository.createAttachment(attachmentRequest);
   }
